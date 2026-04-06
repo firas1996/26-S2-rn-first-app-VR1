@@ -5,9 +5,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import { useState } from "react";
 
 const Login = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+  const handelChange = (txt) => {
+    console.log(txt);
+  };
+  const loginHandler = () => {
+    console.log("ssss");
+  };
   return (
     <View
       style={{
@@ -21,14 +31,22 @@ const Login = () => {
       <View style={styles.container}>
         <View style={styles.inpC}>
           <Text style={styles.label}>Email</Text>
-          <TextInput style={styles.inp} />
+          <TextInput
+            style={styles.inp}
+            onChangeText={handelChange}
+            name="email"
+          />
         </View>
         <View style={styles.inpC}>
           <Text style={styles.label}>Password</Text>
-          <TextInput style={styles.inp} />
+          <TextInput
+            style={styles.inp}
+            onChangeText={handelChange}
+            name="password"
+          />
         </View>
 
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity onPress={loginHandler} style={styles.btn}>
           <Text style={styles.btnTxT}>Login</Text>
         </TouchableOpacity>
       </View>
