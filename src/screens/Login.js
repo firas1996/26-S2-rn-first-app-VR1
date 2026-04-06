@@ -12,11 +12,15 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const handelChange = (txt) => {
-    console.log(txt);
+  const handelChange = (txt, name) => {
+    setUserData({ ...userData, [name]: txt });
   };
   const loginHandler = () => {
-    console.log("ssss");
+    console.log(userData);
+    setUserData({
+      email: "",
+      password: "",
+    });
   };
   return (
     <View
@@ -33,16 +37,20 @@ const Login = () => {
           <Text style={styles.label}>Email</Text>
           <TextInput
             style={styles.inp}
-            onChangeText={handelChange}
-            name="email"
+            onChangeText={(txt) => {
+              handelChange(txt, "email");
+            }}
+            value={userData.email}
           />
         </View>
         <View style={styles.inpC}>
           <Text style={styles.label}>Password</Text>
           <TextInput
             style={styles.inp}
-            onChangeText={handelChange}
-            name="password"
+            onChangeText={(txt) => {
+              handelChange(txt, "password");
+            }}
+            value={userData.password}
           />
         </View>
 
