@@ -3,6 +3,9 @@ import { StyleSheet, Text, View } from "react-native";
 import MyName from "./src/components/MyName";
 import { useState } from "react";
 import Login from "./src/screens/Login";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import Home from "./src/screens/Home";
 
 export default function App() {
   const name = "Firas";
@@ -10,21 +13,31 @@ export default function App() {
   const getData = (data) => {
     setZ(data);
   };
+  const BTabs = createBottomTabNavigator();
+
   return (
-    <View style={styles.container}>
+    <>
       {/* <Text>Hello, {z} </Text>
       <MyName name={name} getData={getData} />
       <StatusBar style="auto" /> */}
-      <Login />
-    </View>
+      {/* <Login /> */}
+      <NavigationContainer>
+        <BTabs.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarLabelStyle: {
+              fontSize: 36,
+              fontFamily: "Georgia",
+              fontWeight: 300,
+            },
+          }}
+        >
+          <BTabs.Screen name="Login" component={Login} />
+          <BTabs.Screen name="Home" component={Home} />
+        </BTabs.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const styles = StyleSheet.create({});

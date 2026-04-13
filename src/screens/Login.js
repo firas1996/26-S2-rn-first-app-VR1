@@ -7,8 +7,10 @@ import {
 } from "react-native";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
+  const navigation = useNavigation();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -16,18 +18,24 @@ const Login = () => {
   const handelChange = (txt, name) => {
     setUserData({ ...userData, [name]: txt });
   };
-  const loginHandler = () => {};
+  const loginHandler = () => {
+    axios
+      .post("http://10.33.4.23:1425/users/signin", {
+        email: userData.email,
+        password: userData.password,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigation.navigate("Home");
+      })
+      .catch((e) => {
+        console.log("ss: ", e);
+      });
+  };
   return (
-    <View
-      style={{
-        width: "100%",
-        height: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <View style={styles.container}>
+      <View style={styles.containerr}>
         <View style={styles.inpC}>
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -61,6 +69,12 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  containerr: {
     backgroundColor: "#cccccc98",
     width: "70%",
     height: "35%",
