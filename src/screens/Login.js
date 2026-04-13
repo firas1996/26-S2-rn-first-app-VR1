@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native";
 import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
   const [userData, setUserData] = useState({
@@ -15,13 +16,7 @@ const Login = () => {
   const handelChange = (txt, name) => {
     setUserData({ ...userData, [name]: txt });
   };
-  const loginHandler = () => {
-    console.log(userData);
-    setUserData({
-      email: "",
-      password: "",
-    });
-  };
+  const loginHandler = () => {};
   return (
     <View
       style={{
