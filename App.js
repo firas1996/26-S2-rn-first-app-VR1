@@ -6,6 +6,8 @@ import Login from "./src/screens/Login";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "./src/screens/Home";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import FavItems from "./src/screens/FavItems";
 
 export default function App() {
   const name = "Firas";
@@ -14,6 +16,7 @@ export default function App() {
     setZ(data);
   };
   const BTabs = createBottomTabNavigator();
+  const Drawer = createDrawerNavigator();
 
   return (
     <>
@@ -22,7 +25,7 @@ export default function App() {
       <StatusBar style="auto" /> */}
       {/* <Login /> */}
       <NavigationContainer>
-        <BTabs.Navigator
+        <Drawer.Navigator
           screenOptions={{
             headerShown: false,
             tabBarLabelStyle: {
@@ -32,9 +35,10 @@ export default function App() {
             },
           }}
         >
-          <BTabs.Screen name="Login" component={Login} />
-          <BTabs.Screen name="Home" component={Home} />
-        </BTabs.Navigator>
+          <Drawer.Screen name="Login" component={Login} />
+          <Drawer.Screen name="Home" component={Home} />
+          <Drawer.Screen name="Fav" component={FavItems} />
+        </Drawer.Navigator>
       </NavigationContainer>
     </>
   );
