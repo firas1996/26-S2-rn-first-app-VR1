@@ -1,5 +1,6 @@
 import {
   Button,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -14,6 +15,13 @@ import Item from "../components/Item";
 const Home = () => {
   const navigation = useNavigation();
   const [inp, setInp] = useState("");
+  const [items, setItems] = useState([]);
+  const addItem = () => {
+    if (inp.trim().length) {
+      setItems([...items, { title: inp, isFav: false, id: Math.random() }]);
+    }
+    setInp("");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.vAdd}>
@@ -24,15 +32,17 @@ const Home = () => {
           }}
           value={inp}
         />
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity style={styles.btn} onPress={addItem}>
           <Text style={styles.btnTxT}>Add</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.vList}>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        <FlatList
+          data={items}
+          renderItem={(data) => {
+            return <Item data={data} />;
+          }}
+        />
       </View>
     </View>
   );

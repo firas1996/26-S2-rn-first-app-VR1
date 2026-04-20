@@ -2,12 +2,16 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-const Item = () => {
+const Item = ({ data }) => {
   return (
     <View style={styles.item}>
-      <Text style={styles.txt}>Item</Text>
+      <Text style={styles.txt}>{data.item.title}</Text>
       <TouchableOpacity>
-        <Ionicons name="heart-outline" size={24} color="white" />
+        <Ionicons
+          name={data.item.isFav ? "heart" : "heart-outline"}
+          size={32}
+          color={data.item.isFav ? "red" : "white"}
+        />
       </TouchableOpacity>
     </View>
   );
