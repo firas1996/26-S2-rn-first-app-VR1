@@ -1,12 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import ItemsStore from "../store/itemsContext";
 
 const Item = ({ data }) => {
+  const { editItem } = useContext(ItemsStore);
   return (
     <View style={styles.item}>
       <Text style={styles.txt}>{data.item.title}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          editItem(data.item.id);
+        }}
+      >
         <Ionicons
           name={data.item.isFav ? "heart" : "heart-outline"}
           size={32}

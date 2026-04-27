@@ -7,21 +7,23 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import MyName from "../components/MyName";
 import Item from "../components/Item";
+import ItemsStore from "../store/itemsContext";
 
 const Home = () => {
+  const { itemsData, addItem } = useContext(ItemsStore);
   const navigation = useNavigation();
   const [inp, setInp] = useState("");
-  const [items, setItems] = useState([]);
-  const addItem = () => {
-    if (inp.trim().length) {
-      setItems([...items, { title: inp, isFav: false, id: Math.random() }]);
-    }
-    setInp("");
-  };
+  // const [items, setItems] = useState([]);
+  // const addItem = () => {
+  //   if (inp.trim().length) {
+  //     setItems([...items, { title: inp, isFav: false, id: Math.random() }]);
+  //   }
+  //   setInp("");
+  // };
   return (
     <View style={styles.container}>
       <View style={styles.vAdd}>
@@ -32,13 +34,19 @@ const Home = () => {
           }}
           value={inp}
         />
-        <TouchableOpacity style={styles.btn} onPress={addItem}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            addItem(inp);
+            setInp("");
+          }}
+        >
           <Text style={styles.btnTxT}>Add</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.vList}>
         <FlatList
-          data={items}
+          data={itemsData}
           renderItem={(data) => {
             return <Item data={data} />;
           }}

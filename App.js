@@ -8,6 +8,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Home from "./src/screens/Home";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavItems from "./src/screens/FavItems";
+import { ItemsProvider } from "./src/store/itemsContext";
 
 export default function App() {
   const name = "Firas";
@@ -19,7 +20,7 @@ export default function App() {
   const Drawer = createDrawerNavigator();
 
   return (
-    <>
+    <ItemsProvider>
       <NavigationContainer>
         <Drawer.Navigator
           screenOptions={{
@@ -36,7 +37,7 @@ export default function App() {
           <Drawer.Screen name="Fav" component={FavItems} />
         </Drawer.Navigator>
       </NavigationContainer>
-    </>
+    </ItemsProvider>
   );
 }
 
