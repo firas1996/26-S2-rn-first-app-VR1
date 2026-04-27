@@ -20,10 +20,6 @@ export default function App() {
 
   return (
     <>
-      {/* <Text>Hello, {z} </Text>
-      <MyName name={name} getData={getData} />
-      <StatusBar style="auto" /> */}
-      {/* <Login /> */}
       <NavigationContainer>
         <Drawer.Navigator
           screenOptions={{
