@@ -5,22 +5,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState({
-    email: "",
-    password: "",
+    email: "testapi@gmail.com",
+    password: "user1234",
   });
+  // useEffect(() => {
+  //   console.log("effect");
+  //   return () => {
+  //     console.log("cleanUp");
+  //   };
+  // }, [userData]);
   const handelChange = (txt, name) => {
     setUserData({ ...userData, [name]: txt });
   };
   const loginHandler = () => {
     axios
-      .post("http://10.33.4.23:1425/users/signin", {
+      .post("http://10.33.4.13:1425/users/signin", {
         email: userData.email,
         password: userData.password,
       })
