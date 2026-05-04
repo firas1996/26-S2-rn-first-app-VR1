@@ -1,0 +1,120 @@
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+
+const Login = () => {
+  const navigation = useNavigation();
+  const [userData, setUserData] = useState({
+    email: "testapi@gmail.com",
+    password: "user1234",
+  });
+  // useEffect(() => {
+  //   console.log("effect");
+  //   return () => {
+  //     console.log("cleanUp");
+  //   };
+  // }, [userData]);
+  const handelChange = (txt, name) => {
+    setUserData({ ...userData, [name]: txt });
+  };
+  const loginHandler = () => {
+    axios
+      .post("http://10.33.4.13:1425/users/signin", {
+        email: userData.email,
+        password: userData.password,
+      })
+      .then((res) => {
+        console.log(res.data);
+        navigation.navigate("Home");
+      })
+      .catch((e) => {
+        console.log("ss: ", e);
+      });
+  };
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
+      <View style={styles.containerr}>
+        <View style={styles.inpC}>
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.inp}
+            onChangeText={(txt) => {
+              handelChange(txt, "email");
+            }}
+            value={userData.email}
+          />
+        </View>
+        <View style={styles.inpC}>
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            style={styles.inp}
+            onChangeText={(txt) => {
+              handelChange(txt, "password");
+            }}
+            value={userData.password}
+          />
+        </View>
+
+        <TouchableOpacity onPress={loginHandler} style={styles.btn}>
+          <Text style={styles.btnTxT}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+export default Login;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  containerr: {
+    backgroundColor: "#f40f0f98",
+    width: "70%",
+    height: "35%",
+    borderRadius: 12,
+    padding: 12,
+    justifyContent: "space-around",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  inpC: {
+    height: "25%",
+  },
+  label: { fontSize: 16, fontWeight: "bold", marginBottom: 10 },
+  inp: {
+    borderColor: "#999999",
+    height: 40,
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: "5",
+  },
+  btn: {
+    backgroundColor: "lightblue",
+    width: 100,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius: 12,
+  },
+  btnTxT: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+});
