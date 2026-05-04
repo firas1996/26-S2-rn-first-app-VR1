@@ -8,8 +8,13 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+/////////////////////////////////////////////////////////////
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import firebase from "../../Firebase";
+import "firebase/firestore";
+/////////////////////////////////////////////////////////////
 
-const Login = () => {
+const Register = () => {
   const navigation = useNavigation();
   const [userData, setUserData] = useState({
     email: "testapi@gmail.com",
@@ -24,23 +29,23 @@ const Login = () => {
   const handelChange = (txt, name) => {
     setUserData({ ...userData, [name]: txt });
   };
-  const loginHandler = () => {
-    axios
-      .post("http://10.33.4.13:1425/users/signin", {
-        email: userData.email,
-        password: userData.password,
+  const registerHandler = () => {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log("User Created: ", user);
       })
-      .then((res) => {
-        console.log(res.data);
-        navigation.navigate("Home");
-      })
-      .catch((e) => {
-        console.log("ss: ", e);
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, "-", errorMessage);
       });
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Register</Text>
       <View style={styles.containerr}>
         <View style={styles.inpC}>
           <Text style={styles.label}>Email</Text>
@@ -63,15 +68,15 @@ const Login = () => {
           />
         </View>
 
-        <TouchableOpacity onPress={loginHandler} style={styles.btn}>
-          <Text style={styles.btnTxT}>Login</Text>
+        <TouchableOpacity onPress={registerHandler} style={styles.btn}>
+          <Text style={styles.btnTxT}>Register</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-export default Login;
+export default Register;
 
 const styles = StyleSheet.create({
   container: {

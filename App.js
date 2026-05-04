@@ -9,6 +9,7 @@ import Home from "./src/screens/Home";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavItems from "./src/screens/FavItems";
 import { ItemsProvider } from "./src/store/itemsContext";
+import Register from "./src/screens/Register";
 
 export default function App() {
   const name = "Firas";
@@ -32,6 +33,7 @@ export default function App() {
             },
           }}
         >
+          <Drawer.Screen name="Register" component={Register} />
           <Drawer.Screen name="Login" component={Login} />
           <Drawer.Screen name="Home" component={Home} />
           <Drawer.Screen name="Fav" component={FavItems} />
