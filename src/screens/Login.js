@@ -8,6 +8,11 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+/////////////////////////////////////////////////////////////
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebase from "../../Firebase";
+import "firebase/firestore";
+/////////////////////////////////////////////////////////////
 
 const Login = () => {
   const navigation = useNavigation();
@@ -25,18 +30,30 @@ const Login = () => {
     setUserData({ ...userData, [name]: txt });
   };
   const loginHandler = () => {
-    axios
-      .post("http://10.33.4.13:1425/users/signin", {
-        email: userData.email,
-        password: userData.password,
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, userData.email, userData.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log("LoggedIN: ", user);
       })
-      .then((res) => {
-        console.log(res.data);
-        navigation.navigate("Home");
-      })
-      .catch((e) => {
-        console.log("ss: ", e);
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, "-", errorMessage);
       });
+    // axios
+    //   .post("http://10.33.4.13:1425/users/signin", {
+    //     email: userData.email,
+    //     password: userData.password,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     navigation.navigate("Home");
+    //   })
+    //   .catch((e) => {
+    //     console.log("ss: ", e);
+    //   });
   };
   return (
     <View style={styles.container}>
